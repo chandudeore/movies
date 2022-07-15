@@ -1,8 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import { useState } from "react";
+import { useParams } from "react-router";
 import "./style/AddMovie.css";
 
-export default function AddMovie() {
+function UpdateMovie() {
+  const { id } = useParams();
+
   const [title, setTitle] = useState("");
   const [rating, setRating] = useState(0);
   const [category, setCategory] = useState("");
@@ -15,19 +18,23 @@ export default function AddMovie() {
     price,
   };
 
-  const postMovie = (e) => {
+  const putMovie = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:5000/movie/add`, {
-      method: "POST",
+    fetch(`http://localhost:5000/movie/update/${id}`, {
+      method: "PUT",
       body: JSON.stringify(movie),
       headers: {
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
       },
-    });
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
+
   return (
-    <>
-      <form onSubmit={postMovie}>
+    <div>
+      <form onSubmit={putMovie}>
         <label htmlFor="title">Title</label>
         <input
           type="text"
@@ -74,6 +81,8 @@ export default function AddMovie() {
           <button type="submit">Add Movie</button>
         </div>
       </form>
-    </>
+    </div>
   );
 }
+
+export default memo(UpdateMovie);

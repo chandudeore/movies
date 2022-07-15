@@ -36,6 +36,16 @@
     transform: rotate(360deg);
   }
 }
+.navbar{
+  padding: 5px 0px;
+}
+.link{
+  margin-left: 30px;
+ padding: 0px 20px;
+ text-decoration: none;
+ color: black;
+ font-weight: bold;
+}
 
 
 
